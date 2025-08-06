@@ -8,8 +8,9 @@
 
 name: Upload Python Package
 
-on: push
-
+on:
+  release:
+    types: [published]
 
 permissions:
   contents: read
@@ -31,6 +32,11 @@ jobs:
           python -m pip install build
           python -m build
 
+      - name: Test release distribution
+        run: |
+          python -m pip install ./ pytest
+          python -m pytest -x pyvmt/test
+
       - name: Upload distributions
         uses: actions/upload-artifact@v4
         with:
@@ -50,12 +56,6 @@ jobs:
     environment:
       name: testpypi
       url: https://test.pypi.org/p/pyvmt_jan_test
-      # OPTIONAL: uncomment and update to include your PyPI project URL in the deployment status:
-      # url: https://pypi.org/p/YOURPROJECT
-      #
-      # ALTERNATIVE: if your GitHub Release name is the PyPI project version string
-      # ALTERNATIVE: exactly, uncomment the following line instead:
-      # url: https://pypi.org/project/YOURPROJECT/${{ github.event.release.name }}
 
     steps:
       - name: Retrieve release distributions
