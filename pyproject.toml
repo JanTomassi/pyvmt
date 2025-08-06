@@ -5,7 +5,7 @@ build-backend = "setuptools.build_meta"
 [tool.setuptools_scm]
 
 [project]
-name = "pyvmt"
+name = "pyvmt_test"
 dynamic = ["version"]
 authors = [
   { name="PyVmt team", email="fm@fbk.eu" },
